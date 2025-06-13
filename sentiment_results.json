@@ -1,0 +1,23 @@
+[
+    {
+        "text": "good",
+        "sentiment": "Positive",
+        "positive_score": 0.9998,
+        "negative_score": 0.0002,
+        "confidence": 0.9998
+    },
+    {
+        "text": "bas",
+        "sentiment": "Positive",
+        "positive_score": 0.9985,
+        "negative_score": 0.0015,
+        "confidence": 0.9985
+    },
+    {
+        "text": "kkd",
+        "sentiment": "Positive",
+        "positive_score": 0.6063,
+        "negative_score": 0.3937,
+        "confidence": 0.6063
+    }
+]
