@@ -1,35 +1,36 @@
-from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from scipy.special import softmax
+import torch
 
-# Load Hugging Face sentiment model
-classifier = pipeline("sentiment-analysis")
+# Load model + tokenizer
+MODEL = "cardiffnlp/twitter-roberta-base-sentiment"
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL)
+
+labels = ['Negative', 'Neutral', 'Positive']
 
 def analyze_sentiment_batch(texts):
     results = []
+
     for text in texts:
-        # Get both POSITIVE and NEGATIVE predictions
-        predictions = classifier(text, top_k=2)
-        sentiment_scores = {pred["label"]: pred["score"] for pred in predictions}
+        encoded_input = tokenizer(text, return_tensors='pt')
+        with torch.no_grad():
+            output = model(**encoded_input)
+        scores = output[0][0].numpy()
+        probs = softmax(scores)
 
-        positive_score = sentiment_scores.get("POSITIVE", 0)
-        negative_score = sentiment_scores.get("NEGATIVE", 0)
-
-        # Decide final sentiment and confidence
-        if positive_score > negative_score:
-            sentiment = "Positive"
-            confidence = positive_score
-        elif negative_score > positive_score:
-            sentiment = "Negative"
-            confidence = negative_score
-        else:
-            sentiment = "Neutral"
-            confidence = positive_score  # or negative_score—they’re equal
+        sentiment = labels[probs.argmax()]
+        confidence = round(float(probs.max()), 4)
 
         results.append({
             "text": text,
             "sentiment": sentiment,
-            "positive_score": round(positive_score, 4),
-            "negative_score": round(negative_score, 4),
-            "confidence": round(confidence, 4)
+            "positive_score": round(float(probs[2]), 4),
+            "negative_score": round(float(probs[0]), 4),
+            "confidence": confidence
         })
 
     return results
+
+
+

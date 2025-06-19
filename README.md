@@ -1,16 +1,25 @@
-# Sentiment Analysis Dashboard
+# 🧠 Sentiment Analysis Dashboard
 
-This is a Streamlit-based dashboard for performing multi-class sentiment analysis on text input. It uses Hugging Face transformers with a fallback to TextBlob for sentiment classification. The app includes keyword extraction, basic visualizations, and export options.
+An interactive web dashboard for performing real-time and batch sentiment analysis on text data. Built with Python, Streamlit, and NLP models.
 
-## Features
+## 🚀 Features
 
-- Real-time sentiment classification (positive, negative, neutral)
-- Confidence scores
-- Keyword extraction
-- Sentiment distribution visualization
-- Export results as CSV or JSON
+- 🔤 **Text input** for single-sentence sentiment classification
+- 📁 **Batch processing** with CSV/JSON file upload
+- 📊 **Visualizations** of sentiment trends
+- 📌 **Keyword extraction** from input text
+- 🔍 **Explainability** with confidence scores
+- 💾 Export results to CSV or JSON
+- 🎨 Clean UI with logo branding
 
-## Installation
+## 📦 Technologies Used
 
-```bash
-pip install -r requirements.txt
+- Python
+- Streamlit
+- Hugging Face Transformers
+- TextBlob
+- Matplotlib / Seaborn
+- Pandas
+
+## 📁 Folder Structure
+

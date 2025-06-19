@@ -47,10 +47,9 @@ if texts:
 
     # Convert results to DataFrame for display/export
     df_results = pd.DataFrame(results)
-    
+
     st.subheader("Analysis Results")
     st.dataframe(df_results[["text", "sentiment", "positive_score", "negative_score", "confidence"]])
-
 
     st.subheader("Sentiment Distribution")
     img_str = plot_sentiment_distribution(results)
@@ -68,8 +67,14 @@ if texts:
         st.sidebar.success("Exported results to sentiment_results.json")
 
     if col3.button("Export PDF"):
-        export_to_pdf(results)
-        st.sidebar.success("Exported results to sentiment_results.pdf")
+        export_to_pdf(results)  # Save PDF
+        with open("sentiment_results.pdf", "rb") as f:
+            st.sidebar.download_button(
+                label="Download PDF",
+                data=f,
+                file_name="sentiment_results.pdf",
+                mime="application/pdf"
+            )
 
 else:
     st.info("Please input or upload text data to analyze.")
